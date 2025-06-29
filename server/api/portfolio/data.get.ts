@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
 	try {
 		// Try to get data from Cloudflare KV first (in production)
 		if (process.env.NODE_ENV === "production") {
-			const kv = event.context.cloudflare?.env?.KV;
+			const kv = event.context.cloudflare?.env?.KV_BINDING;
 			if (kv) {
 				const data = await kv.get("portfolio-data");
 				if (data) {
@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
 
 		// Store in KV for future requests (if available)
 		if (process.env.NODE_ENV === "production") {
-			const kv = event.context.cloudflare?.env?.KV;
+			const kv = event.context.cloudflare?.env?.KV_BINDING;
 			if (kv) {
 				await kv.put("portfolio-data", JSON.stringify(portfolioData));
 			}

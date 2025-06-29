@@ -9,16 +9,19 @@
 ## Setup Steps
 
 ### 1. Install Dependencies
+
 ```bash
 bun install
 ```
 
 ### 2. Login to Cloudflare
+
 ```bash
 bunx wrangler login
 ```
 
 ### 3. Create KV Namespace (Optional but recommended)
+
 ```bash
 # Production
 bunx wrangler kv:namespace create "KV"
@@ -28,11 +31,13 @@ bunx wrangler kv:namespace create "KV" --preview
 ```
 
 ### 4. Update wrangler.toml
+
 Replace the KV namespace IDs in `wrangler.toml` with the ones created above.
 
 ### 5. Create Cloudflare Pages Project
 
 #### Option A: Via Cloudflare Dashboard
+
 1. Go to Cloudflare Dashboard > Pages
 2. Create a new project
 3. Connect your GitHub repository
@@ -43,6 +48,7 @@ Replace the KV namespace IDs in `wrangler.toml` with the ones created above.
    - Node.js version: `18` or `20`
 
 #### Option B: Via Wrangler CLI
+
 ```bash
 # Build the project
 bun run build
@@ -56,14 +62,17 @@ bunx wrangler pages deploy .output/public --project-name=vibe-code-portfolio
 Set these in Cloudflare Pages dashboard under Settings > Environment variables:
 
 **Production:**
+
 - `NODE_ENV`: `production`
 - `NUXT_PUBLIC_SITE_URL`: `https://your-domain.pages.dev`
 
 **Preview:**
+
 - `NODE_ENV`: `preview`
 - `NUXT_PUBLIC_SITE_URL`: `https://preview.your-domain.pages.dev`
 
 ### 7. Custom Domain (Optional)
+
 1. Go to Pages project > Custom domains
 2. Add your domain
 3. Update DNS records as instructed
@@ -71,6 +80,7 @@ Set these in Cloudflare Pages dashboard under Settings > Environment variables:
 ## Deployment Commands
 
 ### Manual Deployment
+
 ```bash
 # Build and deploy to production
 bun run cf:build
@@ -80,6 +90,7 @@ bun run deploy:preview
 ```
 
 ### Automatic Deployment
+
 Push to `main` branch will trigger automatic deployment via GitHub Actions.
 
 ## KV Storage Structure
@@ -111,6 +122,7 @@ The portfolio data is stored in Cloudflare KV with the following structure:
 3. **Routing Issues**: Check `_redirects` file configuration
 
 ### Debug Commands
+
 ```bash
 # Local development with Cloudflare compatibility
 bunx wrangler pages dev .output/public
@@ -137,6 +149,7 @@ bun run build && bun run preview
 ## Support
 
 For issues related to:
+
 - **Nuxt.js**: [Nuxt Documentation](https://nuxt.com/docs)
 - **Cloudflare Pages**: [Cloudflare Docs](https://developers.cloudflare.com/pages/)
 - **Wrangler**: [Wrangler Docs](https://developers.cloudflare.com/workers/wrangler/)
