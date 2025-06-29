@@ -36,10 +36,11 @@ export default defineNuxtConfig({
 		experimental: {
 			wasm: true,
 		},
+		compatibilityDate: "2024-06-29",
 		storage: {
 			redis: {
 				driver: "cloudflare-kv-binding",
-				binding: "KV", // KV namespace binding name
+				binding: "KV_BINDING", // KV namespace binding name
 			},
 		},
 		rollupConfig: {
@@ -48,11 +49,14 @@ export default defineNuxtConfig({
 	},
 	ssr: true,
 	routeRules: {
-		// Homepage pre-rendered at build time
-		"/": { prerender: true },
+		// Homepage will fetch data dynamically to ensure fresh data
+		"/": { ssr: true, prerender: false, headers: { "cache-control": "no-cache" } },
+		// Portfolio page will fetch data dynamically
+		"/portfolio": { ssr: true, prerender: false, headers: { "cache-control": "no-cache" } },
 		// Admin pages are SPA mode
 		"/admin/**": { ssr: false },
-		// API routes use Cloudflare Workers
-		"/api/**": { cors: true, headers: { "cache-control": "max-age=300" } },
+		// API routes use Cloudflare Workers with no cache for portfolio data
+		"/api/portfolio/**": { cors: true, headers: { "cache-control": "no-cache, no-store, must-revalidate" } },
+		"/api/**": { cors: true },
 	},
 });

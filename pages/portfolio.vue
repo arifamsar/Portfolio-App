@@ -168,8 +168,26 @@
 		ogDescription: "Mobile development projects and applications",
 	});
 
-	// Data
-	const { data: projects, pending } = await useLazyFetch<Project[]>("/api/portfolio");
+	// Data - Force client-side fetching for fresh data
+	const {
+		data: projects,
+		pending,
+		refresh: refreshProjects,
+	} = await useLazyFetch<Project[]>("/api/portfolio/data", {
+		server: false, // Force client-side fetching for fresh data
+		default: () => [],
+	});
+
+	// Auto-refresh data on page focus to ensure fresh content
+	onMounted(() => {
+		const handleFocus = () => {
+			refreshProjects();
+		};
+		window.addEventListener("focus", handleFocus);
+		onUnmounted(() => {
+			window.removeEventListener("focus", handleFocus);
+		});
+	});
 
 	// Reactive state
 	const searchQuery = ref("");

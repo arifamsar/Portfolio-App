@@ -519,8 +519,16 @@
 	const refreshProjects = async () => {
 		loading.value = true;
 		try {
-			const data = await $fetch<Project[]>("/api/portfolio");
+			// Add cache busting parameter to ensure fresh data
+			const cacheBuster = Date.now();
+			const data = await $fetch<Project[]>(`/api/portfolio/data?_=${cacheBuster}`, {
+				headers: {
+					"Cache-Control": "no-cache",
+					Pragma: "no-cache",
+				},
+			});
 			projects.value = data || [];
+			console.log("Refreshed projects:", projects.value.length);
 			toast.success("Projects refreshed successfully");
 		} catch (error) {
 			console.error("Failed to fetch projects:", error);

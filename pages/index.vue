@@ -206,9 +206,27 @@
 	// Data
 	const skills = ["Flutter", "React Native", "Kotlin", "Dart", "TypeScript", "Firebase", "GraphQL", "REST APIs", "Mobile UI/UX", "CI/CD"];
 
-	// Fetch projects
-	const { data: projects, pending } = await useLazyFetch<Project[]>("/api/portfolio");
+	// Fetch projects with fresh data
+	const {
+		data: projects,
+		pending,
+		refresh: refreshProjects,
+	} = await useLazyFetch<Project[]>("/api/portfolio/data", {
+		server: false, // Force client-side fetching for fresh data
+		default: () => [],
+	});
 	const featuredProjects = computed(() => projects.value?.filter((p) => p.featured) || []);
+
+	// Auto-refresh data on page focus to ensure fresh content
+	onMounted(() => {
+		const handleFocus = () => {
+			refreshProjects();
+		};
+		window.addEventListener("focus", handleFocus);
+		onUnmounted(() => {
+			window.removeEventListener("focus", handleFocus);
+		});
+	});
 
 	// Methods
 	const scrollToProjects = () => {
