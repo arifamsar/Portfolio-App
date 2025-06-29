@@ -1,45 +1,27 @@
-import { promises as fs } from "fs";
-import { join } from "path";
-
-interface Project {
-	id: number;
-	title: string;
-	description: string;
-	technologies: string[];
-	category: string;
-	image: string;
-	demoUrl?: string | null;
-	githubUrl: string;
-	featured: boolean;
-	status: "completed" | "in-progress" | "planned";
-	createdAt: string;
-	updatedAt: string;
-}
+import { addProject, getNextId } from "~/server/utils/portfolioStorage";
+import type { Project } from "~/types";
 
 export default defineEventHandler(async (event) => {
 	const body = await readBody(event);
 
 	try {
-		const filePath = join(process.cwd(), "server/data/portfolio.json");
-		const data = await fs.readFile(filePath, "utf-8");
-		const projects: Project[] = JSON.parse(data);
-
-		// Generate new ID
-		const newId = Math.max(...projects.map((p: Project) => p.id), 0) + 1;
+		const newId = getNextId();
 
 		const newProject: Project = {
 			id: newId,
 			...body,
+			category: body.category || "Web Development",
+			featured: body.featured || false,
+			status: body.status || "completed",
 			createdAt: new Date().toISOString(),
 			updatedAt: new Date().toISOString(),
 		};
 
-		projects.push(newProject);
-
-		await fs.writeFile(filePath, JSON.stringify(projects, null, 2));
+		addProject(newProject);
 
 		return newProject;
-	} catch {
+	} catch (error) {
+		console.error("Failed to create project:", error);
 		throw createError({
 			statusCode: 500,
 			statusMessage: "Failed to create project",

@@ -31,7 +31,23 @@ export default defineNuxtConfig({
 		 */
 		componentDir: "./components/ui",
 	},
-  nitro: {
-    preset: 'cloudflare-pages',
-  }
+	nitro: {
+		preset: 'cloudflare-pages',
+		compatibilityDate: '2025-05-15',
+		experimental: {
+			wasm: true
+		},
+		cloudflare: {
+			pages: {
+				routes: {
+					include: ['/api/*'],
+					exclude: ['/favicon.ico']
+				}
+			}
+		}
+	},
+	ssr: true,
+	experimental: {
+		payloadExtraction: false
+	}
 });
