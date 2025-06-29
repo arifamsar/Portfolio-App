@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-	const { pending } = useLazyFetch("/api/portfolio");
+	const { pending } = useLazyFetch("/api/portfolio/data");
 </script>
 
 <style scoped>

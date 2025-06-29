@@ -31,6 +31,7 @@
 				<div class="flex items-center space-x-4">
 					<!-- Theme Toggle -->
 					<Button
+						v-if="isClient"
 						variant="ghost"
 						size="icon"
 						class="rounded-full transition-all duration-200"
@@ -56,6 +57,16 @@
 								class="h-5 w-5"
 							/>
 						</Transition>
+					</Button>
+					<!-- Fallback for SSR -->
+					<Button
+						v-else
+						variant="ghost"
+						size="icon"
+						class="rounded-full transition-all duration-200"
+						disabled
+					>
+						<Sun class="h-5 w-5" />
 					</Button>
 
 					<!-- Mobile Menu Button -->
@@ -121,11 +132,21 @@
 
 	// Theme management
 	const colorMode = useColorMode();
+	const isClient = ref(false);
 	const isDark = computed(() => colorMode.value === "dark");
 
+	// Ensure client-side rendering
+	onMounted(() => {
+		isClient.value = true;
+	});
+
 	const toggleTheme = () => {
-		const newMode = isDark.value ? "light" : "dark";
-		colorMode.preference = newMode;
+		try {
+			const newMode = isDark.value ? "light" : "dark";
+			colorMode.preference = newMode;
+		} catch (error) {
+			console.warn("Failed to toggle theme:", error);
+		}
 	};
 
 	const toggleMobileMenu = () => {

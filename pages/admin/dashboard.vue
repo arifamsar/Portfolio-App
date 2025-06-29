@@ -444,6 +444,38 @@
 			</DialogContent>
 		</Dialog>
 
+		<!-- Delete Confirmation Dialog -->
+		<Dialog v-model:open="showDeleteDialog">
+			<DialogContent class="sm:max-w-md">
+				<DialogHeader>
+					<DialogTitle class="flex items-center gap-2 text-destructive">
+						<Trash2 class="w-5 h-5" />
+						Delete Project
+					</DialogTitle>
+					<DialogDescription class="text-left">
+						Are you sure you want to delete this project? This action cannot be undone and will permanently remove the project from your portfolio.
+					</DialogDescription>
+				</DialogHeader>
+				<DialogFooter class="flex-col sm:flex-row gap-2">
+					<Button
+						variant="outline"
+						class="w-full sm:w-auto"
+						@click="cancelDelete"
+					>
+						Cancel
+					</Button>
+					<Button
+						variant="destructive"
+						class="w-full sm:w-auto"
+						@click="confirmDelete"
+					>
+						<Trash2 class="w-4 h-4 mr-2" />
+						Yes, Delete
+					</Button>
+				</DialogFooter>
+			</DialogContent>
+		</Dialog>
+
 		<!-- Floating Logout Button (Mobile Fallback) -->
 		<Button
 			class="fixed bottom-4 right-4 z-50 bg-destructive hover:bg-destructive/90 text-destructive-foreground shadow-lg rounded-full w-12 h-12 md:hidden"
@@ -489,7 +521,9 @@
 	const saving = ref(false);
 	const showProjectDialog = ref(false);
 	const showLogoutDialog = ref(false);
+	const showDeleteDialog = ref(false);
 	const editingProject = ref<Project | null>(null);
+	const deletingProjectId = ref<number | null>(null);
 
 	// GitHub repositories state
 	const repositories = ref<GitHubRepo[]>([]);
@@ -618,10 +652,16 @@
 	};
 
 	const deleteProject = async (id: number) => {
-		if (!confirm("Are you sure you want to delete this project?")) return;
+		// Show confirmation dialog instead of browser alert
+		deletingProjectId.value = id;
+		showDeleteDialog.value = true;
+	};
+
+	const confirmDelete = async () => {
+		if (!deletingProjectId.value) return;
 
 		try {
-			await $fetch(`/api/portfolio/${id}`, {
+			await $fetch(`/api/portfolio/${deletingProjectId.value}`, {
 				method: "DELETE",
 			});
 			toast.success("Project deleted successfully");
@@ -629,7 +669,15 @@
 		} catch (error) {
 			console.error("Failed to delete project:", error);
 			toast.error("Failed to delete project");
+		} finally {
+			showDeleteDialog.value = false;
+			deletingProjectId.value = null;
 		}
+	};
+
+	const cancelDelete = () => {
+		showDeleteDialog.value = false;
+		deletingProjectId.value = null;
 	};
 
 	// GitHub repositories methods
