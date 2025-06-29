@@ -5,6 +5,7 @@
 This is a modern portfolio website built with Nuxt.js 3, TypeScript, and shadcn/ui components featuring a futuristic design.
 
 ## Tech Stack
+
 - **Framework**: Nuxt.js 3
 - **Language**: TypeScript
 - **UI Components**: shadcn/ui (Reka UI)
@@ -14,6 +15,7 @@ This is a modern portfolio website built with Nuxt.js 3, TypeScript, and shadcn/
 - **Development**: ESLint for code quality
 
 ## Project Structure
+
 - `/pages/` - Route pages (index, portfolio, contact, admin)
 - `/components/` - Reusable Vue components
 - `/components/ui/` - shadcn/ui components
@@ -23,6 +25,7 @@ This is a modern portfolio website built with Nuxt.js 3, TypeScript, and shadcn/
 - `/assets/css/` - Global styles and Tailwind configuration
 
 ## Key Features
+
 - **Dynamic Portfolio Management**: CRUD operations via API
 - **Futuristic UI Design**: Modern gradients, animations, and effects
 - **Responsive Design**: Mobile-first approach
@@ -31,6 +34,7 @@ This is a modern portfolio website built with Nuxt.js 3, TypeScript, and shadcn/
 - **SEO Optimized**: Meta tags and structured data
 
 ## Design Principles
+
 - Use futuristic design elements (gradients, glass morphism, subtle animations)
 - Maintain consistent spacing and typography
 - Ensure accessibility and responsive design
@@ -39,12 +43,14 @@ This is a modern portfolio website built with Nuxt.js 3, TypeScript, and shadcn/
 - Implement smooth transitions and hover effects
 
 ## API Endpoints
+
 - `GET /api/portfolio` - Fetch all projects
 - `POST /api/portfolio` - Create new project
 - `PUT /api/portfolio/[id]` - Update project
 - `DELETE /api/portfolio/[id]` - Delete project
 
 ## Development Guidelines
+
 - Use TypeScript for type safety
 - Follow Vue 3 Composition API patterns
 - Implement proper error handling
@@ -53,7 +59,9 @@ This is a modern portfolio website built with Nuxt.js 3, TypeScript, and shadcn/
 - Write self-documenting code with clear variable names
 
 ## Color Scheme
+
 The project uses a custom color system with:
+
 - Primary colors for main actions and highlights
 - Chart colors for data visualization and accents
 - Semantic colors for status and feedback

@@ -130,6 +130,7 @@ The application includes a RESTful API for portfolio management:
 ## 🎯 Usage
 
 ### Adding Projects
+
 1. Navigate to `/admin` page
 2. Click "Add Project" button
 3. Fill in project details:
@@ -139,6 +140,7 @@ The application includes a RESTful API for portfolio management:
    - Status and featured flag
 
 ### Managing Content
+
 - **Portfolio Page**: Displays all projects with filtering and search
 - **Contact Page**: Professional contact information and social links
 - **Admin Dashboard**: Complete CRUD operations for portfolio management
@@ -146,14 +148,18 @@ The application includes a RESTful API for portfolio management:
 ## 🎨 Customization
 
 ### Color Scheme
+
 The project uses a custom OKLCH color system defined in `assets/css/tailwind.css`:
+
 - Primary colors for main actions
 - Chart colors for accents and data visualization
 - Semantic colors for status indicators
 - Full dark/light mode support
 
 ### Adding Components
+
 Follow the shadcn/ui pattern for new components:
+
 ```bash
 # Add new shadcn/ui components using the CLI
 npx shadcn-vue@latest add [component-name]
@@ -170,6 +176,7 @@ npx shadcn-vue@latest add [component-name]
 ## 🚀 Deployment
 
 ### Vercel (Recommended)
+
 ```bash
 # Deploy to Vercel
 vercel
@@ -180,6 +187,7 @@ vercel --prod
 ```
 
 ### Netlify
+
 ```bash
 # Build for static generation
 bun run generate
@@ -188,6 +196,7 @@ bun run generate
 ```
 
 ### Custom Server
+
 ```bash
 # Build for production
 bun run build
@@ -211,6 +220,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👨‍💻 Author
 
 **Muhammad Arif Amsar**
+
 - GitHub: [@arifamsar](https://github.com/arifamsar)
 - LinkedIn: [Muhammad Arif Amsar](https://id.linkedin.com/in/muhammad-arif-amsar)
 

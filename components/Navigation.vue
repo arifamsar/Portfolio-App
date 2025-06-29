@@ -33,29 +33,17 @@
 					<Button
 						variant="ghost"
 						size="icon"
-						class="rounded-full hover:bg-accent transition-all duration-200"
+						class="rounded-full hover:bg-accent"
 						@click="toggleTheme"
 					>
-						<Transition
-							enter-active-class="transition-all duration-200"
-							enter-from-class="opacity-0 rotate-90"
-							enter-to-class="opacity-100 rotate-0"
-							leave-active-class="transition-all duration-200"
-							leave-from-class="opacity-100 rotate-0"
-							leave-to-class="opacity-0 -rotate-90"
-							mode="out-in"
-						>
-							<Sun
-								v-if="isDark"
-								key="sun"
-								class="h-5 w-5"
-							/>
-							<Moon
-								v-else
-								key="moon"
-								class="h-5 w-5"
-							/>
-						</Transition>
+						<Sun
+							v-if="isDark"
+							class="h-5 w-5"
+						/>
+						<Moon
+							v-else
+							class="h-5 w-5"
+						/>
 					</Button>
 
 					<!-- Mobile Menu Button -->
@@ -117,6 +105,7 @@
 		{ name: "Home", href: "/" },
 		{ name: "Portfolio", href: "/portfolio" },
 		{ name: "Contact", href: "/contact" },
+		{ name: "Admin", href: "/admin" },
 	];
 
 	// Theme management
@@ -124,21 +113,8 @@
 	const isDark = computed(() => colorMode.value === "dark");
 
 	const toggleTheme = () => {
-		const newMode = isDark.value ? "light" : "dark";
-		colorMode.preference = newMode;
-
-		// Debug log to ensure it's working
-		console.log("Theme toggled to:", newMode);
-		console.log("Current colorMode value:", colorMode.value);
-		console.log("Current preference:", colorMode.preference);
+		colorMode.preference = isDark.value ? "light" : "dark";
 	};
-
-	// Debug: Log initial state
-	onMounted(() => {
-		console.log("Initial color mode:", colorMode.value);
-		console.log("Initial preference:", colorMode.preference);
-		console.log("Is dark:", isDark.value);
-	});
 
 	const toggleMobileMenu = () => {
 		isMobileMenuOpen.value = !isMobileMenuOpen.value;
