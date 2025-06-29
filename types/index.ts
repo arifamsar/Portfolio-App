@@ -44,3 +44,35 @@ export interface ContactForm {
 	subject: string;
 	message: string;
 }
+
+export interface GitHubRepo {
+	id: number;
+	name: string;
+	full_name: string;
+	description: string | null;
+	html_url: string;
+	clone_url: string;
+	language: string | null;
+	stargazers_count: number;
+	forks_count: number;
+	size: number;
+	created_at: string;
+	updated_at: string;
+	pushed_at: string;
+	topics: string[];
+	private: boolean;
+	fork: boolean;
+	archived: boolean;
+	disabled: boolean;
+	default_branch: string;
+	open_issues_count: number;
+	license: string | null;
+	visibility: string;
+}
+
+export interface GitHubApiResponse {
+	success: boolean;
+	data: GitHubRepo[];
+	total: number;
+	username: string;
+}
