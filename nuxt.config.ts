@@ -31,7 +31,28 @@ export default defineNuxtConfig({
 		 */
 		componentDir: "./components/ui",
 	},
-  nitro: {
-    preset: 'cloudflare-pages',
-  }
+	nitro: {
+		preset: "cloudflare-pages",
+		experimental: {
+			wasm: true,
+		},
+		storage: {
+			redis: {
+				driver: "cloudflare-kv-binding",
+				binding: "KV", // KV namespace binding name
+			},
+		},
+		rollupConfig: {
+			external: ["__STATIC_CONTENT_MANIFEST"],
+		},
+	},
+	ssr: true,
+	routeRules: {
+		// Homepage pre-rendered at build time
+		"/": { prerender: true },
+		// Admin pages are SPA mode
+		"/admin/**": { ssr: false },
+		// API routes use Cloudflare Workers
+		"/api/**": { cors: true, headers: { "cache-control": "max-age=300" } },
+	},
 });
