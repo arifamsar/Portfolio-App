@@ -1,7 +1,7 @@
 <template>
-	<div class="min-h-screen bg-gradient-to-br from-background via-background to-muted">
+	<div class="min-h-screen bg-gradient-to-br from-background via-background to-muted pt-16">
 		<!-- Header -->
-		<header class="bg-card/80 backdrop-blur-sm border-b border-border sticky top-0 z-50">
+		<header class="bg-card/80 backdrop-blur-sm border-b border-border sticky top-16 z-40">
 			<div class="container mx-auto px-4 py-4">
 				<div class="flex items-center justify-between">
 					<div class="flex items-center space-x-4">
@@ -14,28 +14,30 @@
 						</Badge>
 					</div>
 
-					<div class="flex items-center space-x-4">
+					<div class="flex items-center space-x-2 sm:space-x-4">
 						<Button
 							variant="outline"
 							size="sm"
 							:disabled="loading"
+							class="whitespace-nowrap"
 							@click="refreshProjects"
 						>
 							<RotateCcw
 								:class="{ 'animate-spin': loading }"
 								class="w-4 h-4 mr-2"
 							/>
-							Refresh
+							<span class="hidden sm:inline">Refresh</span>
 						</Button>
 
 						<Button
-							variant="outline"
+							variant="destructive"
 							size="sm"
-							class="text-destructive hover:text-destructive-foreground hover:bg-destructive"
-							@click="logout"
+							class="bg-destructive hover:bg-destructive/90 text-destructive-foreground whitespace-nowrap"
+							title="Logout (Ctrl+L)"
+							@click="handleLogout"
 						>
 							<LogOut class="w-4 h-4 mr-2" />
-							Logout
+							<span class="hidden sm:inline">Logout</span>
 						</Button>
 					</div>
 				</div>
@@ -273,6 +275,45 @@
 				</DialogFooter>
 			</DialogContent>
 		</Dialog>
+
+		<!-- Logout Confirmation Dialog -->
+		<Dialog v-model:open="showLogoutDialog">
+			<DialogContent class="max-w-md glass-morphism">
+				<DialogHeader>
+					<DialogTitle class="flex items-center space-x-2">
+						<LogOut class="w-5 h-5 text-destructive" />
+						<span>Confirm Logout</span>
+					</DialogTitle>
+					<DialogDescription> Are you sure you want to logout? You'll need to login again to access the admin dashboard. </DialogDescription>
+				</DialogHeader>
+
+				<DialogFooter class="gap-2">
+					<Button
+						variant="outline"
+						@click="showLogoutDialog = false"
+					>
+						Cancel
+					</Button>
+					<Button
+						variant="destructive"
+						class="bg-destructive hover:bg-destructive/90"
+						@click="confirmLogout"
+					>
+						<LogOut class="w-4 h-4 mr-2" />
+						Yes, Logout
+					</Button>
+				</DialogFooter>
+			</DialogContent>
+		</Dialog>
+
+		<!-- Floating Logout Button (Mobile Fallback) -->
+		<Button
+			class="fixed bottom-4 right-4 z-50 bg-destructive hover:bg-destructive/90 text-destructive-foreground shadow-lg rounded-full w-12 h-12 md:hidden"
+			title="Logout (Ctrl+L)"
+			@click="handleLogout"
+		>
+			<LogOut class="w-5 h-5" />
+		</Button>
 	</div>
 </template>
 
@@ -302,6 +343,7 @@
 	const loading = ref(true);
 	const saving = ref(false);
 	const showProjectDialog = ref(false);
+	const showLogoutDialog = ref(false);
 	const editingProject = ref<Project | null>(null);
 
 	// Form state
@@ -327,7 +369,7 @@
 	const refreshProjects = async () => {
 		loading.value = true;
 		try {
-			const { data } = await $fetch<{ data: Project[] }>("/api/portfolio");
+			const data = await $fetch<Project[]>("/api/portfolio");
 			projects.value = data || [];
 			toast.success("Projects refreshed successfully");
 		} catch (error) {
@@ -432,14 +474,34 @@
 		}
 	};
 
-	const logout = async () => {
+	const handleLogout = () => {
+		showLogoutDialog.value = true;
+	};
+
+	const confirmLogout = async () => {
 		authLogout();
 		toast.success("Logged out successfully");
+		showLogoutDialog.value = false;
 		await router.push("/admin/login");
 	};
 
 	// Initialize
 	onMounted(() => {
 		refreshProjects();
+
+		// Add keyboard shortcut for logout (Ctrl+L)
+		const handleKeyDown = (event: KeyboardEvent) => {
+			if (event.ctrlKey && event.key === "l") {
+				event.preventDefault();
+				handleLogout();
+			}
+		};
+
+		document.addEventListener("keydown", handleKeyDown);
+
+		// Cleanup on unmount
+		onUnmounted(() => {
+			document.removeEventListener("keydown", handleKeyDown);
+		});
 	});
 </script>

@@ -40,7 +40,7 @@
 					<Button
 						variant="outline"
 						size="lg"
-						class="border-primary/50 hover:border-primary text-primary hover:bg-primary/10 px-8 py-6 text-lg font-semibold transition-all duration-300"
+						class="border-primary/50 hover:border-primary text-primary hover:bg-primary hover:text-primary-foreground px-8 py-6 text-lg font-semibold transition-all duration-300"
 						@click="navigateTo('/contact')"
 					>
 						Get In Touch
@@ -177,7 +177,7 @@
 					<Button
 						variant="outline"
 						size="lg"
-						class="border-primary/50 hover:border-primary text-primary hover:bg-primary/10"
+						class="border-primary/50 hover:border-primary text-primary hover:bg-primary hover:text-primary-foreground"
 						@click="navigateTo('/portfolio')"
 					>
 						View All Projects

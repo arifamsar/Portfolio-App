@@ -33,7 +33,7 @@
 					<Button
 						variant="ghost"
 						size="icon"
-						class="rounded-full hover:bg-accent transition-all duration-200"
+						class="rounded-full transition-all duration-200"
 						@click="toggleTheme"
 					>
 						<Transition
@@ -126,19 +126,7 @@
 	const toggleTheme = () => {
 		const newMode = isDark.value ? "light" : "dark";
 		colorMode.preference = newMode;
-
-		// Debug log to ensure it's working
-		console.log("Theme toggled to:", newMode);
-		console.log("Current colorMode value:", colorMode.value);
-		console.log("Current preference:", colorMode.preference);
 	};
-
-	// Debug: Log initial state
-	onMounted(() => {
-		console.log("Initial color mode:", colorMode.value);
-		console.log("Initial preference:", colorMode.preference);
-		console.log("Is dark:", isDark.value);
-	});
 
 	const toggleMobileMenu = () => {
 		isMobileMenuOpen.value = !isMobileMenuOpen.value;
