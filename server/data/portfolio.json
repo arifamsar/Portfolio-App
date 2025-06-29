@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "title": "E-Commerce Mobile App",
+    "description": "Flutter-based e-commerce application with advanced features including real-time notifications, payment integration, and AR product preview.",
+    "technologies": ["Flutter", "Dart", "Firebase", "Stripe API", "ARCore"],
+    "category": "Mobile Development",
+    "image": "/projects/ecommerce-app.jpg",
+    "demoUrl": "https://demo.example.com",
+    "githubUrl": "https://github.com/arifamsar/ecommerce-app",
+    "featured": true,
+    "status": "completed",
+    "createdAt": "2024-01-15T00:00:00.000Z",
+    "updatedAt": "2024-03-20T00:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "title": "Social Media Dashboard",
+    "description": "React Native cross-platform social media management dashboard with analytics, scheduling, and team collaboration features.",
+    "technologies": ["React Native", "TypeScript", "GraphQL", "MongoDB", "Redis"],
+    "category": "Mobile Development",
+    "image": "/projects/social-dashboard.jpg",
+    "demoUrl": "https://demo.example.com",
+    "githubUrl": "https://github.com/arifamsar/social-dashboard",
+    "featured": true,
+    "status": "completed",
+    "createdAt": "2024-02-10T00:00:00.000Z",
+    "updatedAt": "2024-04-15T00:00:00.000Z"
+  },
+  {
+    "id": 3,
+    "title": "IoT Smart Home App",
+    "description": "Native Android application for smart home automation with real-time device control, energy monitoring, and voice commands.",
+    "technologies": ["Kotlin", "MQTT", "WebSocket", "Room Database", "ML Kit"],
+    "category": "IoT & Mobile",
+    "image": "/projects/smart-home.jpg",
+    "demoUrl": null,
+    "githubUrl": "https://github.com/arifamsar/smart-home-app",
+    "featured": false,
+    "status": "in-progress",
+    "createdAt": "2024-03-05T00:00:00.000Z",
+    "updatedAt": "2024-06-29T00:00:00.000Z"
+  }
+]
