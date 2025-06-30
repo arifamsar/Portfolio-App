@@ -10,7 +10,6 @@
 					<div class="w-8 h-8 bg-gradient-to-br from-primary to-chart-1 rounded-lg flex items-center justify-center">
 						<span class="text-white text-sm font-bold">A</span>
 					</div>
-					<span>Arif Amsar</span>
 				</NuxtLink>
 
 				<!-- Desktop Navigation -->
@@ -19,7 +18,7 @@
 						v-for="item in navigation"
 						:key="item.name"
 						:to="item.href"
-						class="relative px-3 py-2 text-sm font-medium text-foreground/80 hover:text-foreground transition-colors group"
+						class="relative px-3 py-2 text-sm font-medium text-foreground/80 hover:text-foreground transition-all duration-300 group hover:scale-105"
 						:class="{ 'text-primary': $route.path === item.href }"
 					>
 						{{ item.name }}
@@ -73,7 +72,7 @@
 					<Button
 						variant="ghost"
 						size="icon"
-						class="md:hidden rounded-full"
+						class="md:hidden rounded-full transition-all duration-200 hover:bg-accent"
 						@click="toggleMobileMenu"
 					>
 						<Menu
@@ -99,15 +98,18 @@
 			>
 				<div
 					v-if="isMobileMenuOpen"
-					class="md:hidden py-4 border-t border-border/50"
+					class="md:hidden py-4 border-t border-border/50 bg-background/95 backdrop-blur-sm"
 				>
-					<div class="flex flex-col space-y-2">
+					<div class="flex flex-col space-y-1">
 						<NuxtLink
 							v-for="item in navigation"
 							:key="item.name"
 							:to="item.href"
-							class="px-3 py-2 text-sm font-medium text-foreground/80 hover:text-foreground hover:bg-accent rounded-md transition-colors"
-							:class="{ 'text-primary bg-accent': $route.path === item.href }"
+							class="px-4 py-3 text-sm font-medium transition-colors duration-200 hover:bg-accent/50 rounded-md mx-2"
+							:class="{
+								'text-primary bg-primary/10': $route.path === item.href,
+								'text-foreground/80 hover:text-foreground': $route.path !== item.href,
+							}"
 							@click="closeMobileMenu"
 						>
 							{{ item.name }}
@@ -138,6 +140,20 @@
 	// Ensure client-side rendering
 	onMounted(() => {
 		isClient.value = true;
+
+		// Add keyboard event listener for accessibility
+		const handleKeydown = (event: KeyboardEvent) => {
+			if (event.key === "Escape" && isMobileMenuOpen.value) {
+				closeMobileMenu();
+			}
+		};
+
+		document.addEventListener("keydown", handleKeydown);
+
+		// Cleanup event listener
+		onUnmounted(() => {
+			document.removeEventListener("keydown", handleKeydown);
+		});
 	});
 
 	const toggleTheme = () => {
@@ -151,10 +167,23 @@
 
 	const toggleMobileMenu = () => {
 		isMobileMenuOpen.value = !isMobileMenuOpen.value;
+
+		// Prevent body scroll when mobile menu is open
+		if (import.meta.client) {
+			if (isMobileMenuOpen.value) {
+				document.body.style.overflow = "hidden";
+			} else {
+				document.body.style.overflow = "";
+			}
+		}
 	};
 
 	const closeMobileMenu = () => {
 		isMobileMenuOpen.value = false;
+		// Re-enable body scroll
+		if (import.meta.client) {
+			document.body.style.overflow = "";
+		}
 	};
 
 	// Close mobile menu when route changes
