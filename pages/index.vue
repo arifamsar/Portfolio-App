@@ -1,12 +1,12 @@
 <template>
-	<div class="container mx-auto px-4 pt-20">
+	<div class="container mx-auto px-4 pt-20 fade-slide-up">
 		<!-- Hero Section -->
 		<section class="min-h-screen flex items-center justify-center relative">
 			<div class="text-center space-y-8 max-w-4xl mx-auto">
 				<!-- Avatar with futuristic glow -->
-				<div class="relative mx-auto w-32 h-32 mb-8">
+				<div class="relative mx-auto w-32 h-32 mb-8 stagger-animation">
 					<div class="absolute inset-0 bg-gradient-to-r from-primary to-chart-1 rounded-full blur-lg opacity-75 animate-pulse" />
-					<div class="relative w-full h-full bg-gradient-to-r from-primary to-chart-1 rounded-full p-1">
+					<div class="relative w-full h-full bg-gradient-to-r from-primary to-chart-1 rounded-full p-1 hover:scale-110 transition-transform duration-500">
 						<div class="w-full h-full bg-background rounded-full flex items-center justify-center text-4xl font-bold text-primary">A</div>
 					</div>
 				</div>
@@ -18,20 +18,20 @@
 					</h1>
 					<h2 class="text-2xl md:text-3xl text-muted-foreground font-light">
 						Mobile Developer &
-						<span class="text-primary">Digital Innovator</span>
+						<span class="text-primary">Frontend Developer</span>
 					</h2>
 				</div>
 
 				<!-- Description -->
-				<p class="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+				<p class="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed stagger-animation">
 					Crafting exceptional mobile experiences with Flutter, React Native, and native Android development. Passionate about turning ideas into reality through clean code and innovative solutions.
 				</p>
 
 				<!-- CTA Buttons -->
-				<div class="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
+				<div class="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8 stagger-animation">
 					<Button
 						size="lg"
-						class="bg-gradient-to-r from-primary to-chart-1 hover:from-primary/90 hover:to-chart-1/90 text-white px-8 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 group"
+						class="btn-enhanced bg-gradient-to-r from-primary to-chart-1 hover:from-primary/90 hover:to-chart-1/90 text-white px-8 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 group focus-enhanced"
 						@click="scrollToProjects"
 					>
 						View My Work
@@ -40,7 +40,7 @@
 					<Button
 						variant="outline"
 						size="lg"
-						class="border-primary/50 hover:border-primary text-primary hover:bg-primary hover:text-primary-foreground px-8 py-6 text-lg font-semibold transition-all duration-300"
+						class="btn-enhanced border-primary/50 hover:border-primary text-primary hover:bg-primary hover:text-primary-foreground px-8 py-6 text-lg font-semibold transition-all duration-300 focus-enhanced"
 						@click="navigateTo('/contact')"
 					>
 						Get In Touch
@@ -97,14 +97,15 @@
 						</p>
 
 						<!-- Skills -->
-						<div class="space-y-4">
+						<div class="space-y-4 stagger-animation">
 							<h3 class="text-xl font-semibold">Core Technologies</h3>
 							<div class="flex flex-wrap gap-2">
 								<Badge
-									v-for="skill in skills"
+									v-for="(skill, index) in skills"
 									:key="skill"
 									variant="secondary"
-									class="px-3 py-1 text-sm"
+									class="px-3 py-1 text-sm stagger-animation hover:scale-110 transition-transform duration-300 cursor-default"
+									:style="{ animationDelay: `${index * 0.05 + 1}s` }"
 								>
 									{{ skill }}
 								</Badge>
@@ -166,10 +167,11 @@
 					class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
 				>
 					<ProjectCard
-						v-for="project in featuredProjects"
+						v-for="(project, index) in featuredProjects"
 						:key="project.id"
 						:project="project"
-						class="animate-float"
+						class="stagger-animation"
+						:style="{ animationDelay: `${index * 0.1 + 0.3}s` }"
 					/>
 				</div>
 

@@ -5,7 +5,7 @@ export default defineNuxtConfig({
 	compatibilityDate: "2025-05-15",
 	devtools: { enabled: true },
 	modules: ["@nuxt/eslint", "shadcn-nuxt", "@vueuse/nuxt", "@nuxtjs/color-mode"],
-	css: ["~/assets/css/tailwind.css"],
+	css: ["~/assets/css/tailwind.css", "~/assets/css/transitions.css"],
 	vite: {
 		plugins: [tailwindcss()],
 	},
@@ -48,6 +48,19 @@ export default defineNuxtConfig({
 		},
 	},
 	ssr: true,
+	// Page transitions configuration
+	app: {
+		pageTransition: {
+			name: "page",
+			mode: "out-in",
+			duration: 300,
+		},
+		layoutTransition: {
+			name: "layout",
+			mode: "out-in",
+			duration: 250,
+		},
+	},
 	routeRules: {
 		// Homepage will fetch data dynamically to ensure fresh data
 		"/": { ssr: true, prerender: false, headers: { "cache-control": "no-cache" } },

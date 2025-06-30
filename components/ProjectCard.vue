@@ -1,12 +1,12 @@
 <template>
-	<Card class="group hover:shadow-xl transition-all duration-300 border-border/50 hover:border-primary/20 overflow-hidden bg-card/50 backdrop-blur-sm">
+	<Card class="group hover:shadow-xl hover:shadow-primary/10 transition-all duration-500 border-border/50 hover:border-primary/20 overflow-hidden bg-card/50 backdrop-blur-sm hover:-translate-y-1 hover:scale-[1.02]">
 		<!-- Project Image -->
 		<div class="relative overflow-hidden h-48 bg-gradient-to-br from-primary/10 to-chart-1/10">
 			<img
 				v-if="project.image && project.image !== '/projects/placeholder.jpg'"
 				:src="project.image"
 				:alt="project.title"
-				class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+				class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-out"
 			/>
 			<div
 				v-else

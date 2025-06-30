@@ -452,9 +452,7 @@
 						<Trash2 class="w-5 h-5" />
 						Delete Project
 					</DialogTitle>
-					<DialogDescription class="text-left">
-						Are you sure you want to delete this project? This action cannot be undone and will permanently remove the project from your portfolio.
-					</DialogDescription>
+					<DialogDescription class="text-left"> Are you sure you want to delete this project? This action cannot be undone and will permanently remove the project from your portfolio. </DialogDescription>
 				</DialogHeader>
 				<DialogFooter class="flex-col sm:flex-row gap-2">
 					<Button
